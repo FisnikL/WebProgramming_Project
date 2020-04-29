@@ -19,5 +19,5 @@ public class UserResponse {
     public double rating;
     public String profilePictureUrl;
     public boolean isBlocked;
-    public String roles;
+    public Set<Role> roles;
 }

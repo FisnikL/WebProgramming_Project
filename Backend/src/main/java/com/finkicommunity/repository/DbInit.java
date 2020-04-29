@@ -61,13 +61,12 @@ public class DbInit implements CommandLineRunner {
         // CREATING ROLES
         List<Role> roles = new ArrayList<>(3);
         Role userRole = new Role("USER");
-        Role moderatorRole = new Role("MODERATOR");
         Role adminRole = new Role("ADMIN");
-
+        Role moderatorRole = new Role("MODERATOR");
 
         roles.add(userRole);
-        roles.add(moderatorRole);
         roles.add(adminRole);
+        roles.add(moderatorRole);
 
         roleRepository.saveAll(roles);
         log.info("Lookup each role by name...");
