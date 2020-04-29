@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 
 @NodeEntity
@@ -25,7 +26,7 @@ public class User {
     private long created;
 
     @Relationship(type = "HAS_ROLE")
-    private Set<Role> roles;
+    private Set<Role> roles = new TreeSet<>();
 
     @Relationship(type = "FOLLOWING")
     private Set<User> following;

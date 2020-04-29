@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {User} from './_models/user';
-import {AuthenticationService} from './_services/authentication.service';
 import {Router} from '@angular/router';
+import {AuthenticationService} from './services/authentication.service';
+import {UserLoginResponse} from './models/user-login-response';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  // title = 'Frontend';
-  currentUser: User;
-
+  currentUser: UserLoginResponse;
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService

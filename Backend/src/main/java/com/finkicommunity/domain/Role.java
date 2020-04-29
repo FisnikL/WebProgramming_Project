@@ -8,7 +8,7 @@ import org.neo4j.ogm.annotation.NodeEntity;
 import java.util.Objects;
 
 @NodeEntity
-public class Role {
+public class Role implements Comparable<Role> {
     @Id @GeneratedValue
     private Long id;
     private String role;
@@ -52,6 +52,11 @@ public class Role {
     @Override
     public String toString() {
         return role;
+    }
+
+    @Override
+    public int compareTo(Role o) {
+        return role.compareTo(o.getRole());
     }
 }
 

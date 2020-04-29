@@ -1,0 +1,13 @@
+h1 {
+  padding: 20px;
+  font-weight: bold;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+}
+
+div {
+  border: 1px black solid;
+}

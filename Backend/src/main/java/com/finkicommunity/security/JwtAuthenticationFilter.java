@@ -3,6 +3,9 @@ package com.finkicommunity.security;
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finkicommunity.domain.request.user.LoginRequest;
+import com.finkicommunity.domain.response.UserLoginResponse;
+import com.finkicommunity.domain.response.UserResponse;
+import com.google.gson.Gson;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -61,5 +65,32 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         // Add token in response
         response.addHeader(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + token);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.setStatus(HttpServletResponse.SC_OK);
+
+        PrintWriter out = response.getWriter();
+        UserLoginResponse userLoginResponse = new UserLoginResponse();
+        // userResponse.expiresIn = expires;
+        // userResponse.idToken = token;
+        // GrantedAuthority[] grantedAuthorities;
+//        userResponse.role = Role.valueOf(principal.getAuthorities()
+//                .stream()
+//                .findFirst()
+//                .map(
+//                        authority ->  authority.getAuthority().replace("ROLE_", "")
+//                )
+//                .orElse("USER")
+//        );
+//        userResponse.errorMessage = "";
+//        userResponse.valid = true;
+        userLoginResponse.username = principal.getUsername();
+        userLoginResponse.jwtToken = token;
+
+        String userResponseJsonString = new Gson().toJson(userLoginResponse);
+
+        out.print(userResponseJsonString);
+        out.flush();
     }
 }
