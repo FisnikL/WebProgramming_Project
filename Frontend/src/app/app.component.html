@@ -1,0 +1,27 @@
+<!--<app-toolbar></app-toolbar>-->
+
+<!--nav-->
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <div class="navbar-nav">
+    <a class="nav-item nav-link" routerLink="/home">Home</a>
+    <a class="nav-item nav-link" routerLink="/users">Users</a>
+    <a class="nav-item nav-link" routerLink="/posts">Posts</a>
+    <a class="nav-item nav-link" routerLink="/upload">Upload</a>
+    <a class="nav-item nav-link" *ngIf="currentUser" (click)="logout()">Logout</a>
+    <a class="nav-item nav-link" *ngIf="!currentUser" routerLink="/login">Login</a>
+    <a class="nav-item nav-link" *ngIf="!currentUser" routerLink="/register">Register</a>
+  </div>
+</nav>
+
+<!--main app container-->
+<!--<div>-->
+<!--  <div class="container">-->
+<!--    <div class="row">-->
+<!--      <div class="col-sm-6 offset-sm-3">-->
+<!--        <app-alert></app-alert>-->
+<!--        <router-outlet></router-outlet>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+<router-outlet></router-outlet>
