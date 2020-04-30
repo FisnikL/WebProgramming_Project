@@ -10,7 +10,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/replies")
+@RequestMapping("/replies")
+@CrossOrigin
 public class ReplyController {
     private ReplyService replyService;
 

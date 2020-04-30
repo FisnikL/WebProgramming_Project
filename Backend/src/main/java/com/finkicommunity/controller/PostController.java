@@ -12,7 +12,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/posts")
+@RequestMapping("/posts")
+@CrossOrigin
 public class PostController {
     private PostService postService;
 

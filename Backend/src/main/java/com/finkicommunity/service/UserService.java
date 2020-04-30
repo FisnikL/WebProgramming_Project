@@ -1,6 +1,5 @@
 package com.finkicommunity.service;
 
-import com.finkicommunity.domain.Role;
 import com.finkicommunity.domain.User;
 import com.finkicommunity.domain.request.user.FollowRequest;
 import com.finkicommunity.domain.response.UserResponse;
@@ -10,7 +9,6 @@ import com.finkicommunity.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Service
@@ -73,7 +71,7 @@ public class UserService {
         userResponse.rating = user.getRating();
         userResponse.profilePictureUrl = user.getProfilePictureUrl();
         userResponse.isBlocked = user.isBlocked();
-        userResponse.roles = new TreeSet<Role>(user.getRoles()).first().getRole();
+        userResponse.roles = user.getRoles();
 
         return userResponse;
     }

@@ -10,7 +10,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/groups")
+@RequestMapping("/groups")
+@CrossOrigin  // Enabling Cross Origin Requests for a RESTful Web Service
 public class GroupController {
     private GroupService groupService;
 
