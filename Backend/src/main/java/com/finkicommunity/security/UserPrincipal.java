@@ -1,7 +1,5 @@
 package com.finkicommunity.security;
 
-import com.finkicommunity.domain.Role;
-import com.finkicommunity.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

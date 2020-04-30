@@ -30,7 +30,7 @@ export class AuthenticationService {
       )
       .pipe(
         map(userLoginResponse => {
-          console.log(userLoginResponse);
+          // console.log(userLoginResponse);
           localStorage.setItem('currentUser', JSON.stringify(userLoginResponse));
 
           this.currentUserSubject.next(userLoginResponse);
