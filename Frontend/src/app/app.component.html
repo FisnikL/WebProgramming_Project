@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <div class="navbar-nav">
+    <a class="nav-item nav-link" routerLink="/home">Home</a>
+    <a class="nav-item nav-link" routerLink="/users">Users</a>
+    <a class="nav-item nav-link" routerLink="/posts">Posts</a>
+    <a class="nav-item nav-link" routerLink="/upload">Upload</a>
+    <a class="nav-item nav-link" *ngIf="currentUser" (click)="logout()">Logout</a>
+    <a class="nav-item nav-link" *ngIf="!currentUser" routerLink="/login">Login</a>
+    <a class="nav-item nav-link" *ngIf="!currentUser" routerLink="/register">Register</a>
+  </div>
+</nav>
+<app-alert></app-alert>
+<router-outlet></router-outlet>
+
+
