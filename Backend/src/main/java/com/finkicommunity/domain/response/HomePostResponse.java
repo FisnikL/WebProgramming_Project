@@ -10,6 +10,7 @@ public class HomePostResponse {
     public String username;
     // public String userRating;
     // public String userProfilePictureUrl;
-    public int numOfLikes;
+    public int numOfThumbUps;
+    public int numOfThumbDowns;
     public int numOfReplies;
 }

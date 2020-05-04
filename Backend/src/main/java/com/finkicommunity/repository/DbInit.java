@@ -125,10 +125,18 @@ public class DbInit implements CommandLineRunner {
             post.setGroup(g);
             User u = users.get(random.nextInt(users.size()));
             post.setUser(u);
-            int numLikes = random.nextInt(6);
-            for(int j = 0; j < numLikes; ++j){
+            int numThumbUps = random.nextInt(6);
+            for(int j = 0; j < numThumbUps; ++j){
                 u = users.get(random.nextInt(users.size()));
-                post.getLikes().add(u);
+                post.getThumbUps().add(u);
+            }
+            int numThumbDowns = random.nextInt(6);
+            for(int j = 0; j < numThumbDowns; ++j){
+                u = users.get(random.nextInt(users.size()));
+                if(!post.getThumbUps().contains(u)){
+                    post.getThumbDowns().add(u);
+                }
+
             }
             posts.add(post);
         }

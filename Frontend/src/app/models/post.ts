@@ -3,7 +3,10 @@ export class Post {
   title: string;
   content: string;
   created: string;
+  groupCode: string;
+  groupName: string;
   username: string;
-  numOfLikes: number;
+  numOfThumbUps: number;
+  numOfThumbDowns: number;
   numOfReplies: number;
 }

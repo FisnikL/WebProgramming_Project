@@ -23,12 +23,16 @@ public class Post {
     @Relationship(type = "USER_POST", direction = Relationship.UNDIRECTED)
     private User user;
 
-    @Relationship(type = "LIKES", direction = Relationship.UNDIRECTED)
-    private Set<User> likes;
+    @Relationship(type = "THUMB_UP", direction = Relationship.UNDIRECTED)
+    private Set<User> thumbUps;
+
+    @Relationship(type = "THUMB_DOWN", direction = Relationship.UNDIRECTED)
+    private Set<User> thumbDowns;
 
     public Post() {
         created = System.currentTimeMillis();
-        likes = new HashSet<>();
+        thumbUps = new HashSet<>();
+        thumbDowns = new HashSet<>();
     }
 
     public Long getId() {
@@ -75,12 +79,14 @@ public class Post {
         this.user = user;
     }
 
-    public Set<User> getLikes() {
-        return likes;
+    public Set<User> getThumbUps() {
+        return thumbUps;
     }
+
+    public Set<User> getThumbDowns() {return thumbDowns; }
 
     @Override
     public String toString() {
-        return id + " " + title + " " + content + " " + group.getCode() + " " + user.getUsername() + " " + likes.size();
+        return id + " " + title + " " + content + " " + group.getCode() + " " + user.getUsername() + " " + thumbUps.size() + " " + thumbDowns.size();
     }
 }

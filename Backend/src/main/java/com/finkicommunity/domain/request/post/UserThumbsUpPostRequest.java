@@ -2,11 +2,11 @@ package com.finkicommunity.domain.request.post;
 
 import javax.validation.constraints.NotNull;
 
-public class UserLikesPostRequest {
+public class UserThumbsUpPostRequest {
     @NotNull
     public String username;
     @NotNull
     public Long postId;
     @NotNull
-    public Boolean isLike;  // If true -> like, if false -> no like
+    public Boolean isThumbUp;  // If true -> thumbUp, if false -> exiting thumb up
 }

@@ -2,20 +2,15 @@ package com.finkicommunity.service;
 
 import com.finkicommunity.domain.Group;
 import com.finkicommunity.domain.Post;
-import com.finkicommunity.domain.Reply;
 import com.finkicommunity.domain.User;
 import com.finkicommunity.domain.request.post.NewPostRequest;
-import com.finkicommunity.domain.request.post.UserLikesPostRequest;
+import com.finkicommunity.domain.request.post.UserThumbsDownPostRequest;
+import com.finkicommunity.domain.request.post.UserThumbsUpPostRequest;
 import com.finkicommunity.domain.response.HomePostResponse;
 import com.finkicommunity.domain.response.PostDetailsResponse;
 import com.finkicommunity.domain.response.ReplyResponse;
-import com.finkicommunity.exception.group.GroupDoesntExistException;
 import com.finkicommunity.exception.post.PostNotFoundException;
-import com.finkicommunity.exception.user.UserNotFoundException;
-import com.finkicommunity.repository.GroupRepository;
 import com.finkicommunity.repository.PostRepository;
-import com.finkicommunity.repository.ReplyRepository;
-import com.finkicommunity.repository.UserRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -72,25 +67,49 @@ public class PostService {
         return postDetailsResponse;
     }
 
-    public UserLikesPostRequest likePost(UserLikesPostRequest userLikesPostRequest){
+    public UserThumbsUpPostRequest thumbUpPost(UserThumbsUpPostRequest userThumbsUpPostRequest){
 
-        String username = userLikesPostRequest.username;
-        Long postId = userLikesPostRequest.postId;
+        String username = userThumbsUpPostRequest.username;
+        Long postId = userThumbsUpPostRequest.postId;
 
         // If not found will be thrown exception
         User user = userService.getUserByUsername(username);
         // If post not found will be thrown exception
         Post post = getPostById(postId);
 
-        if(userLikesPostRequest.isLike){
-            post.getLikes().add(user);
+        if(userThumbsUpPostRequest.isThumbUp){
+            // remove user if he thumb downs the post -> one user cannot thumb up and thumb down a post
+            post.getThumbDowns().remove(user);
+            post.getThumbUps().add(user);
         }else{
-            post.getLikes().remove(user);
+            post.getThumbUps().remove(user);
         }
 
         postRepository.save(post);
 
-        return userLikesPostRequest;
+        return userThumbsUpPostRequest;
+    }
+
+    public UserThumbsDownPostRequest thumbDownPost(UserThumbsDownPostRequest userThumbsDownPostRequest) {
+        String username = userThumbsDownPostRequest.username;
+        Long postId = userThumbsDownPostRequest.postId;
+
+        // If not found will be thrown exception
+        User user = userService.getUserByUsername(username);
+        // If post not found will be thrown exception
+        Post post = getPostById(postId);
+
+        if(userThumbsDownPostRequest.isThumbDown){
+            // remove user if he thumb ups the post -> one user cannot thumb up and thumb down a post at the same time
+            post.getThumbUps().remove(user);
+            post.getThumbDowns().add(user);
+        }else{
+            post.getThumbDowns().remove(user);
+        }
+
+        postRepository.save(post);
+
+        return userThumbsDownPostRequest;
     }
 
     public HomePostResponse createNewPost(NewPostRequest newPostRequest) {
@@ -122,7 +141,8 @@ public class PostService {
         homePostResponse.groupCode = post.getGroup().getCode();
         homePostResponse.groupName = post.getGroup().getName();
         homePostResponse.username = post.getUser().getUsername();
-        homePostResponse.numOfLikes = post.getLikes().size();
+        homePostResponse.numOfThumbUps = post.getThumbUps().size();
+        homePostResponse.numOfThumbDowns = post.getThumbDowns().size();
         homePostResponse.numOfReplies = postRepository.countReplies(post.getId());
 
         return homePostResponse;
@@ -138,7 +158,7 @@ public class PostService {
         postDetailsResponse.groupCode = post.getGroup().getCode();
         postDetailsResponse.groupName = post.getGroup().getName();
         postDetailsResponse.userName = post.getUser().getUsername();
-        postDetailsResponse.numOfLikes = post.getLikes().size();
+        postDetailsResponse.numOfLikes = post.getThumbUps().size();
 
         List<ReplyResponse> replies = replyService.getRepliesForPostId(post.getId());
 
@@ -155,4 +175,6 @@ public class PostService {
         }
         return post.get();
     }
+
+
 }

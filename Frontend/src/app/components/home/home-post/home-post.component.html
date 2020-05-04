@@ -1,9 +1,38 @@
-<div style="border: 1px green solid">
-  <div>{{post.id}}</div>
-  <div>{{post.title}}</div>
-  <div>{{post.content}}</div>
-  <div>{{post.created | date}}</div>
-  <div>{{post.username}}</div>
-  <div>{{post.numOfLikes}}</div>
-  <div>{{post.numOfReplies}}</div>
+<div class="home-post">
+  <div class="title">
+    <a href="#">{{post.title}}</a>
+    <span class="created">{{post.created | date:'dd/MM/yy, HH:mm'}}</span>
+  </div>
+
+  <div class="group">
+    <b>Group:  </b><a href="/{{post.groupCode}}">{{post.groupName}}</a>
+  </div>
+  <div class="content">{{post.content}}</div>
+
+  <div>
+    <div class="num-of-thumbups">
+      <button (click)="thumbUpClicked()">
+        <span *ngIf="isThumbUped" class="material-icons">thumb_up</span>
+        <span *ngIf="!isThumbUped" class="material-icons-outlined">thumb_up</span>
+        {{post.numOfThumbUps}}
+      </button>
+    </div>
+    <div class="num-of-thumbdowns">
+      <button (click)="thumbDownClicked()">
+        <span *ngIf="isThumbDowned" class="material-icons">thumb_down</span>
+        <span *ngIf="!isThumbDowned" class="material-icons-outlined">thumb_down</span>
+        {{post.numOfThumbDowns}}
+      </button>
+    </div>
+  </div>
+
+  <div>
+    <div class="username">
+      Posted by: <a href="/{{post.username}}">{{post.username}}</a>
+    </div>
+    <div class="num-of-replies">
+      <a href="#">[Replies: {{post.numOfReplies}}]</a>
+    </div>
+  </div>
+
 </div>

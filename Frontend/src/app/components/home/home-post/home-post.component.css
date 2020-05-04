@@ -1,0 +1,58 @@
+.home-post{
+  border: 1px darkgrey solid;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-bottom: 20px;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+  background-color: gainsboro;
+  font-size: 20px;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 8px;
+}
+
+.content {
+  padding: 10px;
+}
+
+.created {
+  display: inline-block;
+  float:right;
+  background-color: gainsboro;
+  padding-right: 10px;
+  color: blue;
+  font-weight: normal;
+}
+
+.group {
+  text-align: end;
+  padding-right: 5px;
+  font-size: 16px;
+}
+
+.num-of-thumbups, .num-of-thumbdowns {
+  font-size: 20px;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.username {
+  display: inline-block;
+  width: 50%;
+  float:left;
+  margin-right: 5px;
+  padding-top: 10px;
+  font-size: 16px;
+  /*background-color: aqua;*/
+}
+
+.num-of-replies {
+  text-align: end;
+  /*background-color: antiquewhite;*/
+  font-size: 20px;
+  padding-right: 5px;
+}

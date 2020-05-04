@@ -1,3 +1,14 @@
+<div class="search-groups-form">
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search groups ..." aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</div>
+<br/>
+<div class="groups-title">
+  <b>Groups:</b>
+</div>
+<br/>
 <div *ngFor="let group of groups">
   <app-home-group [group]="group"></app-home-group>
 </div>

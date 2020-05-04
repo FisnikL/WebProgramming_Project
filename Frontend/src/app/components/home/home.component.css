@@ -3,11 +3,22 @@ h1 {
   font-weight: bold;
 }
 
-.flex-container {
-  display: flex;
-  flex-direction: row;
-}
-
 div {
   border: 1px black solid;
+}
+.row {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.groups {
+  width: 21%;
+}
+
+.posts {
+  width: 59%;
+}
+
+.users {
+  width: 20%;
 }

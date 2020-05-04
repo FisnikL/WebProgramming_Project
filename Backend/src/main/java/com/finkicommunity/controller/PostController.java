@@ -1,7 +1,8 @@
 package com.finkicommunity.controller;
 
 import com.finkicommunity.domain.request.post.NewPostRequest;
-import com.finkicommunity.domain.request.post.UserLikesPostRequest;
+import com.finkicommunity.domain.request.post.UserThumbsDownPostRequest;
+import com.finkicommunity.domain.request.post.UserThumbsUpPostRequest;
 import com.finkicommunity.domain.response.HomePostResponse;
 import com.finkicommunity.domain.response.PostDetailsResponse;
 import com.finkicommunity.service.PostService;
@@ -43,9 +44,14 @@ public class PostController {
         return ResponseEntity.ok(postService.createNewPost(newPostRequest));
     }
 
-    @PostMapping("/like")
-    public ResponseEntity<UserLikesPostRequest> createNewPost(@RequestBody @Valid UserLikesPostRequest userLikesPostRequest){
-        return ResponseEntity.ok(postService.likePost(userLikesPostRequest));
+    @PostMapping("/thumbup")
+    public ResponseEntity<UserThumbsUpPostRequest> thumbUpPost(@RequestBody @Valid UserThumbsUpPostRequest userThumbsUpPostRequest){
+        return ResponseEntity.ok(postService.thumbUpPost(userThumbsUpPostRequest));
+    }
+
+    @PostMapping("/thumbdown")
+    public ResponseEntity<UserThumbsDownPostRequest> thumbDownPost(@RequestBody @Valid UserThumbsDownPostRequest userThumbsDownPostRequest){
+        return ResponseEntity.ok(postService.thumbDownPost(userThumbsDownPostRequest));
     }
 
 }
