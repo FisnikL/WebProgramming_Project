@@ -46,6 +46,13 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
+    public List<HomePostResponse> searchPosts(String searchTerm) {
+        return postRepository.findAllByTitleContainingOrContentContaining(searchTerm, searchTerm, searchTerm)
+                .stream()
+                .map(post -> convertFromPostToHomePostResponse(post))
+                .collect(Collectors.toList());
+    }
+
     public List<HomePostResponse> getHomePosts(int page, int size) {
 
         Sort sort = Sort.by("created").descending();
@@ -175,6 +182,4 @@ public class PostService {
         }
         return post.get();
     }
-
-
 }

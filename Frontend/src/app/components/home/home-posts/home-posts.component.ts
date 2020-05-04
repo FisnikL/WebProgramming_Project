@@ -17,4 +17,8 @@ export class HomePostsComponent implements OnInit {
       .subscribe(posts => this.posts = posts);
   }
 
+  searchPosts(posts: Post[]) {
+    this.posts = posts;
+  }
+
 }

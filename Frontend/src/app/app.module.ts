@@ -36,6 +36,8 @@ import { HomeGroupsComponent } from './components/home/home-groups/home-groups.c
 import { HomeGroupComponent } from './components/home/home-group/home-group.component';
 import { HomePostsComponent } from './components/home/home-posts/home-posts.component';
 import { HomePostComponent } from './components/home/home-post/home-post.component';
+import { SearchGroupsComponent } from './components/home/home-groups/search-groups/search-groups.component';
+import { SearchPostsComponent } from './components/home/home-posts/search-posts/search-posts.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { HomePostComponent } from './components/home/home-post/home-post.compone
     HomeGroupsComponent,
     HomeGroupComponent,
     HomePostsComponent,
-    HomePostComponent
+    HomePostComponent,
+    SearchGroupsComponent,
+    SearchPostsComponent
   ],
     imports: [
         BrowserModule,

@@ -1,5 +1,7 @@
 package com.finkicommunity.controller;
 
+import com.finkicommunity.domain.Group;
+import com.finkicommunity.domain.Post;
 import com.finkicommunity.domain.request.post.NewPostRequest;
 import com.finkicommunity.domain.request.post.UserThumbsDownPostRequest;
 import com.finkicommunity.domain.request.post.UserThumbsUpPostRequest;
@@ -52,6 +54,11 @@ public class PostController {
     @PostMapping("/thumbdown")
     public ResponseEntity<UserThumbsDownPostRequest> thumbDownPost(@RequestBody @Valid UserThumbsDownPostRequest userThumbsDownPostRequest){
         return ResponseEntity.ok(postService.thumbDownPost(userThumbsDownPostRequest));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<HomePostResponse>> getGroupsFromSearchResult(@RequestParam String q){
+        return ResponseEntity.ok(postService.searchPosts(q));
     }
 
 }

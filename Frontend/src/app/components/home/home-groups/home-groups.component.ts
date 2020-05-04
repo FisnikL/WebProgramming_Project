@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Group} from '../../../models/group';
-import {User} from '../../../models/user';
 
 @Component({
   selector: 'app-home-groups',
@@ -16,6 +15,10 @@ export class HomeGroupsComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<Group[]>('http://localhost:8080/api/groups')
       .subscribe(groups => this.groups = groups);
+  }
+
+  searchGroups(groups: Group[]) {
+    this.groups = groups;
   }
 
 }

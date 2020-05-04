@@ -1,0 +1,13 @@
+<div class="search-groups-form">
+  <form class="form-inline" [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+    <input
+      class="form-control mr-sm-2"
+      id="search-groups"
+      formControlName="searchTerm"
+      type="search"
+      placeholder="Search groups ..."
+      aria-label="Search"
+    />
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+</div>

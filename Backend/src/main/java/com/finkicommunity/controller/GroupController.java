@@ -31,4 +31,9 @@ public class GroupController {
     public ResponseEntity<Group> createNewGroup(@RequestBody @Valid NewGroupRequest newGroupRequest){
         return ResponseEntity.ok(groupService.createNewGroup(newGroupRequest));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Group>> getGroupsFromSearchResult(@RequestParam String q){
+        return ResponseEntity.ok(groupService.searchGroups(q));
+    }
 }
