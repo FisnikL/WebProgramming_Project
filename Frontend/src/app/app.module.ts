@@ -40,6 +40,7 @@ import { SearchGroupsComponent } from './components/home/home-groups/search-grou
 import { SearchPostsComponent } from './components/home/home-posts/search-posts/search-posts.component';
 import { GroupDetailsComponent } from './components/group-details/group-details.component';
 import { UploadGroupImageComponent } from './components/group-details/upload-group-image/upload-group-image.component';
+import { GroupPostComponent } from './components/group-details/group-post/group-post.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { UploadGroupImageComponent } from './components/group-details/upload-gro
     SearchGroupsComponent,
     SearchPostsComponent,
     GroupDetailsComponent,
-    UploadGroupImageComponent
+    UploadGroupImageComponent,
+    GroupPostComponent
   ],
     imports: [
         BrowserModule,

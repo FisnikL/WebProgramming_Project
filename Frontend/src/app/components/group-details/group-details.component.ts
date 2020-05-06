@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {GroupDetails} from '../../models/group-details';
 import {GroupPicture} from '../../models/group-picture';
+import {GroupDetailsPost} from '../../models/group-details-post';
 
 @Component({
   selector: 'app-group-details',
@@ -14,6 +15,7 @@ export class GroupDetailsComponent implements OnInit {
   public groupCode: string;
   public groupDetails: GroupDetails;
   public groupImage: any;
+  public groupPosts: GroupDetailsPost[];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -24,18 +26,23 @@ export class GroupDetailsComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(
       params => {
         this.groupCode = params.get('code');
-        this.http.get<GroupDetails>(`http://localhost:8080/api/groups/details/${this.groupCode}`)
-          .subscribe(
-            result => {
-              // console.log('RESULT:');
-              // console.log(result);
-              this.groupDetails = result;
-              // this.groupImage = 'data:image/jpeg;base64,' + result.groupPicture.picByte;
-            }
-          );
+        this.getGroupDetails();
         this.getGroupPicture();
+        this.getGroupPosts();
       }
     );
+  }
+
+  getGroupDetails() {
+    this.http.get<GroupDetails>(`http://localhost:8080/api/groups/details/${this.groupCode}`)
+      .subscribe(
+        result => {
+          // console.log('RESULT:');
+          // console.log(result);
+          this.groupDetails = result;
+          // this.groupImage = 'data:image/jpeg;base64,' + result.groupPicture.picByte;
+        }
+      );
   }
 
   getGroupPicture() {
@@ -48,6 +55,15 @@ export class GroupDetailsComponent implements OnInit {
           } else {
             this.groupImage = null;
           }
+        }
+      );
+  }
+
+  getGroupPosts() {
+    this.http.get<GroupDetailsPost[]>(`http://localhost:8080/api/posts/posts-from-group?groupCode=${this.groupCode}`)
+      .subscribe(
+        response => {
+          this.groupPosts = response;
         }
       );
   }

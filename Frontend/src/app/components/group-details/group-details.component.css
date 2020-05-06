@@ -4,13 +4,16 @@ h1 {
 
 .group-image {
   width: 40%;
-  /*border: 1px solid black;*/
-  float: left;
+  border: 1px solid black;
 }
 
 .group-details {
-  width: 60%;
+  width: 40%;
   border: 1px solid black;
   padding: 50px;
-  float: left;
+}
+
+.group-posts-container {
+  border: 1px solid black;
+  width: 60%;
 }

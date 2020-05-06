@@ -19,4 +19,8 @@ public interface PostRepository extends PagingAndSortingRepository<Post, Long> {
 
     List<Post> findAllByTitleContainingOrContentContaining(String searchTerm1, String searchTerm2, String searchTerm3);
 
+    @Query("MATCH (p:Post)-[has_group:GROUP_POST]-(g:Group) " +
+            "WHERE g.code = {0} " +
+            "RETURN p")
+    List<Post> getPostsFromGroup(String groupCode);
 }

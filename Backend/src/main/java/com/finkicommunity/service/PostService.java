@@ -6,6 +6,7 @@ import com.finkicommunity.domain.User;
 import com.finkicommunity.domain.request.post.NewPostRequest;
 import com.finkicommunity.domain.request.post.UserThumbsDownPostRequest;
 import com.finkicommunity.domain.request.post.UserThumbsUpPostRequest;
+import com.finkicommunity.domain.response.post.GroupDetailsPost;
 import com.finkicommunity.domain.response.post.HomePostResponse;
 import com.finkicommunity.domain.response.post.PostDetailsResponse;
 import com.finkicommunity.domain.response.reply.ReplyResponse;
@@ -16,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -181,5 +183,25 @@ public class PostService {
             throw new PostNotFoundException("Post with id [" + id + "] not found.");
         }
         return post.get();
+    }
+
+    public List<GroupDetailsPost> getPostsFromGroup(String groupCode) {
+        List<Post> postsFromGroup = postRepository.getPostsFromGroup(groupCode);
+        return convertFromPostsToGroupDetailsPosts(postsFromGroup);
+    }
+
+    private List<GroupDetailsPost> convertFromPostsToGroupDetailsPosts(List<Post> postsFromGroup) {
+        List<GroupDetailsPost> groupDetailsPosts = new ArrayList<>();
+
+        for(Post post: postsFromGroup) {
+            GroupDetailsPost groupDetailsPost = new GroupDetailsPost();
+            groupDetailsPost.title = post.getTitle();
+            groupDetailsPost.content = post.getContent();
+//            groupDetailsPost.username = post.getUser().getUsername();
+
+            groupDetailsPosts.add(groupDetailsPost);
+        }
+
+        return groupDetailsPosts;
     }
 }

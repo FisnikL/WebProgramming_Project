@@ -3,6 +3,7 @@ package com.finkicommunity.controller;
 import com.finkicommunity.domain.request.post.NewPostRequest;
 import com.finkicommunity.domain.request.post.UserThumbsDownPostRequest;
 import com.finkicommunity.domain.request.post.UserThumbsUpPostRequest;
+import com.finkicommunity.domain.response.post.GroupDetailsPost;
 import com.finkicommunity.domain.response.post.HomePostResponse;
 import com.finkicommunity.domain.response.post.PostDetailsResponse;
 import com.finkicommunity.service.PostService;
@@ -55,8 +56,14 @@ public class PostController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<HomePostResponse>> getGroupsFromSearchResult(@RequestParam String q){
+    public ResponseEntity<List<HomePostResponse>> getPostsFromSearchResult(@RequestParam String q){
         return ResponseEntity.ok(postService.searchPosts(q));
+    }
+
+    @GetMapping("/posts-from-group")
+    public ResponseEntity<List<GroupDetailsPost>> getPostsFromGroup(@RequestParam String groupCode) {
+//        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(postService.getPostsFromGroup(groupCode));
     }
 
 }
