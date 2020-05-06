@@ -1,21 +1,31 @@
 package com.finkicommunity.domain;
 
-import lombok.NoArgsConstructor;
-import org.neo4j.ogm.annotation.*;
+import org.neo4j.ogm.annotation.GeneratedValue;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @NodeEntity
-@NoArgsConstructor
 public class Group {
     @Id @GeneratedValue
     private Long id;
     private String code;
     private String name;
     private String description;
-    private String GroupPictureUrl;
 
-//    private Set<User> moderators;
+    @Relationship(type="GROUP_PICTURE")
+    private ImageModel groupPicture;
+
+    @Relationship(type = "MODERATOR", direction = Relationship.UNDIRECTED)
+    private Set<User> moderators;
+
+
+    public Group() {
+        moderators = new LinkedHashSet<>();
+    }
 
     public Long getId() {
         return id;
@@ -47,6 +57,22 @@ public class Group {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ImageModel getGroupPicture() {
+        return groupPicture;
+    }
+
+    public void setGroupPicture(ImageModel groupPicture) {
+        this.groupPicture = groupPicture;
+    }
+
+    public Set<User> getModerators() {
+        return moderators;
+    }
+
+    public void addModerator(User moderator) {
+        this.moderators.add(moderator);
     }
 
     @Override

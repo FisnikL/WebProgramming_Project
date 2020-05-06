@@ -1,4 +1,4 @@
-package com.finkicommunity.domain.response;
+package com.finkicommunity.domain.response.reply;
 
 public class ReplyResponse {
     public Long id;

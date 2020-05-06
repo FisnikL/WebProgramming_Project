@@ -3,7 +3,7 @@ package com.finkicommunity.security;
 import com.auth0.jwt.JWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finkicommunity.domain.request.user.LoginRequest;
-import com.finkicommunity.domain.response.UserLoginResponse;
+import com.finkicommunity.domain.response.user.UserLoginResponse;
 import com.google.gson.Gson;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

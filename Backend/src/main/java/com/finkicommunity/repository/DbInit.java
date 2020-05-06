@@ -59,14 +59,14 @@ public class DbInit implements CommandLineRunner {
 
 
         // CREATING ROLES
-        List<Role> roles = new ArrayList<>(3);
+        List<Role> roles = new ArrayList<>(2);
         Role userRole = new Role("USER");
-        Role moderatorRole = new Role("MODERATOR");
+        // Role moderatorRole = new Role("MODERATOR");
         Role adminRole = new Role("ADMIN");
 
 
         roles.add(userRole);
-        roles.add(moderatorRole);
+        //roles.add(moderatorRole);
         roles.add(adminRole);
 
         roleRepository.saveAll(roles);
@@ -81,9 +81,11 @@ public class DbInit implements CommandLineRunner {
         User user;
         for(int i = 1; i <= 30; ++i){
             Set<Role> r = new HashSet<>();
-            for(int j = 0; j<2; ++j){
-                r.add(roles.get(random.nextInt(roles.size())));
+            r.add(roleRepository.findByRole("USER"));
+            if(random.nextBoolean()){
+                r.add(roleRepository.findByRole("ADMIN"));
             }
+
             user = new User("username" + i, passwordEncoder.encode("password" + i), r);
 //                user.setUsername("username" + i);
 //                user.setPassword("password" + i);
@@ -99,6 +101,17 @@ public class DbInit implements CommandLineRunner {
 
         log.info("Lookup each user by username...");
         users.stream().forEach(u -> log.info("\t" + userRepository.findByUsername(u.getUsername()).toString()));
+
+        // CREATE GROUP MODERATORS
+        for(Group tempGroup: groups){
+            for(int i = 0; i < 3; ++i){
+                User u = users.get(random.nextInt(users.size()));
+                tempGroup.addModerator(u);
+            }
+        }
+
+        groupRepository.saveAll(groups);
+        log.info("Saved groups");
 
         // CREATE FOLLOWS
         users = userRepository.findAll();

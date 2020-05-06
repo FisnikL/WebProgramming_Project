@@ -2,7 +2,7 @@ package com.finkicommunity.controller;
 
 import com.finkicommunity.domain.request.user.FollowRequest;
 import com.finkicommunity.domain.request.user.RegisterUserRequest;
-import com.finkicommunity.domain.response.UserResponse;
+import com.finkicommunity.domain.response.user.UserResponse;
 import com.finkicommunity.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

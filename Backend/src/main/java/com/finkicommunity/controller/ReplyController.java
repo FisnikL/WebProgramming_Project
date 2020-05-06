@@ -1,7 +1,7 @@
 package com.finkicommunity.controller;
 
 import com.finkicommunity.domain.request.reply.UserLikesReplyRequest;
-import com.finkicommunity.domain.response.ReplyResponse;
+import com.finkicommunity.domain.response.reply.ReplyResponse;
 import com.finkicommunity.service.ReplyService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

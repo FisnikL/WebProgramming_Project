@@ -4,7 +4,7 @@ import com.finkicommunity.domain.Role;
 import com.finkicommunity.domain.User;
 import com.finkicommunity.domain.request.user.FollowRequest;
 import com.finkicommunity.domain.request.user.RegisterUserRequest;
-import com.finkicommunity.domain.response.UserResponse;
+import com.finkicommunity.domain.response.user.UserResponse;
 import com.finkicommunity.exception.user.SameUsernameFollowingException;
 import com.finkicommunity.exception.user.UserNotFoundException;
 import com.finkicommunity.repository.UserRepository;
@@ -97,7 +97,7 @@ public class UserService {
         userResponse.numFollowings = user.getFollowing().size();
         userResponse.numFollowers = userRepository.countFollowers(user.getId());
         userResponse.rating = user.getRating();
-        userResponse.profilePictureUrl = user.getProfilePictureUrl();
+//        userResponse.profilePictureUrl = user.getProfilePictureUrl();
         userResponse.isBlocked = user.isBlocked();
         userResponse.roles = new TreeSet<Role>(user.getRoles()).first().getRole();
 

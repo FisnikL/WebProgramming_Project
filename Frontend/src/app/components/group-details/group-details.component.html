@@ -1,0 +1,28 @@
+<h1 *ngIf="groupDetails">Welcome to group {{groupDetails.name}}</h1>
+
+<div *ngIf="groupDetails" class="container">
+  <div class="group-image">
+    <div *ngIf="groupImage">
+      <img [src]="groupImage" width="100%" height="100%">
+    </div>
+    <div *ngIf="!groupImage">
+      <img src="assets/no-image-available.png" width="100%" height="100%">
+    </div>
+    <hr/>
+    <app-upload-group-image [groupCode]="groupCode" (imageUploaded)="imageUploaded($event)"></app-upload-group-image>
+  </div>
+  <div class="group-details">
+    <h3>Group Details:</h3>
+    <div>Name: {{groupDetails.name}}</div>
+    <div>Description: {{groupDetails.description}}</div>
+    <div>Moderators: </div>
+    <div>
+      <div *ngFor="let moderator of groupDetails.moderators" style="margin-left: 20px">
+        <div>{{moderator.firstName}} {{moderator.lastName}} {{moderator.username}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <h3>Latest Posts of Group {{groupDetails.name}}</h3>
+</div>

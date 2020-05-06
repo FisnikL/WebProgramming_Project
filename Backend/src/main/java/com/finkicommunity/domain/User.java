@@ -26,7 +26,7 @@ public class User {
     private long created;
 
     @Relationship(type = "HAS_ROLE")
-    private Set<Role> roles = new TreeSet<>();
+    private Set<Role> roles;
 
     @Relationship(type = "FOLLOWING")
     private Set<User> following;
@@ -46,15 +46,18 @@ public class User {
         rating = 0.0;
         isBlocked = false;
         following = new HashSet<>();
-        roles.add(new Role("USER"));
+        roles = new TreeSet<>();
     }
 
     public User(String username, String password, Set<Role> roles) {
         this.username = username;
         this.password = password;
+        following = new HashSet<>();
         this.roles = roles;
         created = LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli();
         // created = System.currentTimeMillis();
+        rating = 0.0;
+        isBlocked = false;
     }
 
     public Long getId() {

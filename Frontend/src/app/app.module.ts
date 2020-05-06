@@ -38,6 +38,8 @@ import { HomePostsComponent } from './components/home/home-posts/home-posts.comp
 import { HomePostComponent } from './components/home/home-post/home-post.component';
 import { SearchGroupsComponent } from './components/home/home-groups/search-groups/search-groups.component';
 import { SearchPostsComponent } from './components/home/home-posts/search-posts/search-posts.component';
+import { GroupDetailsComponent } from './components/group-details/group-details.component';
+import { UploadGroupImageComponent } from './components/group-details/upload-group-image/upload-group-image.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { SearchPostsComponent } from './components/home/home-posts/search-posts/
     HomePostsComponent,
     HomePostComponent,
     SearchGroupsComponent,
-    SearchPostsComponent
+    SearchPostsComponent,
+    GroupDetailsComponent,
+    UploadGroupImageComponent
   ],
     imports: [
         BrowserModule,

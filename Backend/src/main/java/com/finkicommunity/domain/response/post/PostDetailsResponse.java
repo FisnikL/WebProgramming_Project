@@ -1,4 +1,6 @@
-package com.finkicommunity.domain.response;
+package com.finkicommunity.domain.response.post;
+
+import com.finkicommunity.domain.response.reply.ReplyResponse;
 
 import java.util.List;
 

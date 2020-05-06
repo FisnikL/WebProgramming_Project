@@ -1,12 +1,10 @@
 package com.finkicommunity.controller;
 
-import com.finkicommunity.domain.Group;
-import com.finkicommunity.domain.Post;
 import com.finkicommunity.domain.request.post.NewPostRequest;
 import com.finkicommunity.domain.request.post.UserThumbsDownPostRequest;
 import com.finkicommunity.domain.request.post.UserThumbsUpPostRequest;
-import com.finkicommunity.domain.response.HomePostResponse;
-import com.finkicommunity.domain.response.PostDetailsResponse;
+import com.finkicommunity.domain.response.post.HomePostResponse;
+import com.finkicommunity.domain.response.post.PostDetailsResponse;
 import com.finkicommunity.service.PostService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

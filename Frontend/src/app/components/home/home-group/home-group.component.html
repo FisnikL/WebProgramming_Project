@@ -1,6 +1,12 @@
 <div class="group">
-  <a href="#">
+  <a routerLink="/groups/{{group.code}}">
     <div class="image">
+      <div *ngIf="groupImage">
+        <img [src]="groupImage" width="50" height="40">
+      </div>
+      <div *ngIf="!groupImage">
+        <img src="assets/no-image-available.png" width="50" height="40">
+      </div>
     </div>
     <div class="group-name">
       {{group.name}}

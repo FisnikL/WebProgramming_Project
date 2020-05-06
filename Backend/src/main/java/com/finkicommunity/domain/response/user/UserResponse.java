@@ -1,4 +1,4 @@
-package com.finkicommunity.domain.response;
+package com.finkicommunity.domain.response.user;
 
 public class UserResponse {
     public Long id;
@@ -13,7 +13,6 @@ public class UserResponse {
     public int numFollowings;
     public int numFollowers;
     public double rating;
-    public String profilePictureUrl;
     public boolean isBlocked;
     public String roles;
 }

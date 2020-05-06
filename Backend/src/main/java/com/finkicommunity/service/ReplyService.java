@@ -1,10 +1,9 @@
 package com.finkicommunity.service;
 
-import com.finkicommunity.domain.Post;
 import com.finkicommunity.domain.Reply;
 import com.finkicommunity.domain.User;
 import com.finkicommunity.domain.request.reply.UserLikesReplyRequest;
-import com.finkicommunity.domain.response.ReplyResponse;
+import com.finkicommunity.domain.response.reply.ReplyResponse;
 import com.finkicommunity.exception.reply.ReplyNotFoundException;
 import com.finkicommunity.repository.ReplyRepository;
 import org.springframework.stereotype.Service;

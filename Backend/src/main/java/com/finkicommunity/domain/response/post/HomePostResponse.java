@@ -1,4 +1,4 @@
-package com.finkicommunity.domain.response;
+package com.finkicommunity.domain.response.post;
 
 public class HomePostResponse {
     public long id;

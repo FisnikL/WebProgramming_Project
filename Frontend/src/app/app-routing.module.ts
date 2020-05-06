@@ -6,6 +6,7 @@ import {UsersComponent} from './components/users/users.component';
 import {PostsComponent} from './components/posts/posts.component';
 import {UploadFileComponent} from './components/upload-file/upload-file.component';
 import {HomeComponent} from './components/home/home.component';
+import {GroupDetailsComponent} from './components/group-details/group-details.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'posts', component: PostsComponent},
   {path: 'upload', component: UploadFileComponent},
   {path: 'home', component: HomeComponent},
+  {path: 'groups/:code', component: GroupDetailsComponent},
   // otherwise redirect to login
   {path: '**', redirectTo: 'home'}
 ];
