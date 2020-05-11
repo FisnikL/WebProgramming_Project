@@ -2,10 +2,17 @@ package com.finkicommunity.repository;
 
 import com.finkicommunity.FinkiCommunityApplication;
 import com.finkicommunity.controller.GroupController;
+import com.finkicommunity.controller.PostController;
+import com.finkicommunity.controller.ReplyController;
 import com.finkicommunity.controller.UserController;
 import com.finkicommunity.domain.*;
 import com.finkicommunity.domain.request.group.AddGroupModeratorRequest;
 import com.finkicommunity.domain.request.group.NewGroupRequest;
+import com.finkicommunity.domain.request.post.NewPostRequest;
+import com.finkicommunity.domain.request.post.UserThumbsDownPostRequest;
+import com.finkicommunity.domain.request.post.UserThumbsUpPostRequest;
+import com.finkicommunity.domain.request.reply.NewReplyRequest;
+import com.finkicommunity.domain.request.user.FollowRequest;
 import com.finkicommunity.domain.request.user.RegisterUserRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,12 +34,15 @@ public class DbInit implements CommandLineRunner {
 
     private GroupController groupController;
     private UserController userController;
+    private PostController postController;
+    private ReplyController replyController;
 
     private final static Logger log = LoggerFactory.getLogger(FinkiCommunityApplication.class);
 
     public DbInit(GroupRepository groupRepository, RoleRepository roleRepository, PostRepository postRepository,
                   UserRepository userRepository, ReplyRepository replyRepository, ImageModelRepository imageModelRepository,
-                  GroupController groupController, UserController userController) {
+                  GroupController groupController, UserController userController, PostController postController, ReplyController replyController) {
+
         this.groupRepository = groupRepository;
         this.roleRepository = roleRepository;
         this.postRepository = postRepository;
@@ -42,6 +52,8 @@ public class DbInit implements CommandLineRunner {
 
         this.groupController = groupController;
         this.userController = userController;
+        this.postController = postController;
+        this.replyController = replyController;
     }
 
     @Override
@@ -68,71 +80,138 @@ public class DbInit implements CommandLineRunner {
 
         // CREATE GROUP MODERATORS
         addGroupsModerators();
-//
-//        // CREATE FOLLOWS
-//        users = userRepository.findAll();
-//        for(int i = 0; i<50; ++i){
-//            User user1 = users.get(random.nextInt(users.size()));
-//            User user2 = users.get(random.nextInt(users.size()));
-//            if(!user1.getUsername().equals(user2.getUsername())){
-//                user1.getFollowing().add(user2);
-//                log.info("\t" + user1.getUsername() + " FOLLOWING " + user2.getUsername());
-//            }else{
-//                i--;
-//            }
-//        }
-//
-//        // CREATING POSTS
-//        List<Post> posts = new ArrayList<>();
-//        Post post;
-//
-//        for(int i = 1; i<=50; ++i){
-//            post = new Post();
-//            post.setTitle("title" + i);
-//            post.setContent("content" + i);
-//            Group g = groups.get(random.nextInt(groups.size()));
-//            post.setGroup(g);
-//            User u = users.get(random.nextInt(users.size()));
-//            post.setUser(u);
-//            int numThumbUps = random.nextInt(6);
-//            for(int j = 0; j < numThumbUps; ++j){
-//                u = users.get(random.nextInt(users.size()));
-//                post.getThumbUps().add(u);
-//            }
-//            int numThumbDowns = random.nextInt(6);
-//            for(int j = 0; j < numThumbDowns; ++j){
-//                u = users.get(random.nextInt(users.size()));
-//                if(!post.getThumbUps().contains(u)){
-//                    post.getThumbDowns().add(u);
-//                }
-//
-//            }
-//            posts.add(post);
-//        }
-//        postRepository.saveAll(posts);
-//        log.info("Lookup each post by name...");
-//        posts.stream().forEach(p -> log.info("\t" + postRepository.findByTitle(p.getTitle()).toString()));
-//
-//
-//        // CREATING REPLIES
-//        List<Reply> replies = new ArrayList<>();
-//        for(int i = 1; i<= 200; ++i){
-//            Reply reply = new Reply();
-//            reply.setContent("replyContent" + i);
-//            reply.setUser(users.get(random.nextInt(users.size())));
-//            reply.setPost(posts.get(random.nextInt(posts.size())));
-//
-//            int numLikes = random.nextInt(6);
-//            for(int j = 0; j < numLikes; ++j){
-//                User u = users.get(random.nextInt(users.size()));
-//                reply.getLikes().add(u);
-//            }
-//
-//            replies.add(reply);
-//        }
-//        replyRepository.saveAll(replies);
-//        log.info("Lookup each reply...");
-//        replies.stream().forEach(r -> log.info("\t" + replyRepository.findByContent(r.getContent()).toString()));
+
+        // CREATE FOLLOWS
+        createFollows();
+
+        // CREATE POSTS
+        createPosts();
+
+        // CREATE POST THUMBUPS/DOWN
+        createPostsThumbsUpsAndDowns();
+
+        // CREAT REPLIES
+        createReplies();
+
+        // CREATE REPLY THUMBUPS/DOWNS
+        createRepliesThumbsUpsAndDowns();
+    }
+
+    private void createRepliesThumbsUpsAndDowns() {
+        List<Reply> replies = replyRepository.findAll();
+        List<User> users = userRepository.findAll();
+        Random random = new Random();
+
+        for(Reply reply: replies) {
+            // THUMBUPS
+            int numThumbUps = random.nextInt(6);
+            for(int j = 0; j < numThumbUps; ++j){
+                User u = users.get(random.nextInt(users.size()));
+
+                UserThumbsUpPostRequest thumbsUpPostRequest = new UserThumbsUpPostRequest();
+                thumbsUpPostRequest.postId = reply.getId();
+                thumbsUpPostRequest.username = u.getUsername();
+
+                replyController.thumbUpReply(thumbsUpPostRequest);
+            }
+
+            // THUMBDOWNS
+            int numThumbDowns = random.nextInt(6);
+            for(int j = 0; j < numThumbDowns; ++j){
+                User u = users.get(random.nextInt(users.size()));
+
+                UserThumbsDownPostRequest thumbsDownPostRequest = new UserThumbsDownPostRequest();
+                thumbsDownPostRequest.postId = reply.getId();
+                thumbsDownPostRequest.username = u.getUsername();
+
+                replyController.thumbDownReply(thumbsDownPostRequest);
+            }
+        }
+    }
+
+    private void createReplies() {
+        List<User> users = userRepository.findAll();
+        List<Post> posts = postRepository.findAll();
+        Random random = new Random();
+
+        for(int i = 1; i <= 200; ++i) {
+            NewReplyRequest newReplyRequest = new NewReplyRequest();
+            newReplyRequest.content = "replyContent" + i;
+            newReplyRequest.username = users.get(random.nextInt(users.size())).getUsername();
+            newReplyRequest.postId = posts.get(random.nextInt(posts.size())).getId();
+
+            replyController.createNewReply(newReplyRequest);
+        }
+    }
+
+    private void createPostsThumbsUpsAndDowns() {
+        List<Post> posts = postRepository.findAll();
+        List<User> users = userRepository.findAll();
+        Random random = new Random();
+
+        for(Post post: posts) {
+            // THUMBUPS
+            int numThumbUps = random.nextInt(6);
+            for(int j = 0; j < numThumbUps; ++j){
+                User u = users.get(random.nextInt(users.size()));
+
+                UserThumbsUpPostRequest thumbsUpPostRequest = new UserThumbsUpPostRequest();
+                thumbsUpPostRequest.postId = post.getId();
+                thumbsUpPostRequest.username = u.getUsername();
+
+                postController.thumbUpPost(thumbsUpPostRequest);
+            }
+
+            // THUMBDOWNS
+            int numThumbDowns = random.nextInt(6);
+            for(int j = 0; j < numThumbDowns; ++j){
+                User u = users.get(random.nextInt(users.size()));
+
+                UserThumbsDownPostRequest thumbsDownPostRequest = new UserThumbsDownPostRequest();
+                thumbsDownPostRequest.postId = post.getId();
+                thumbsDownPostRequest.username = u.getUsername();
+
+                postController.thumbDownPost(thumbsDownPostRequest);
+            }
+        }
+    }
+
+
+    private void createPosts() {
+        List<Group> groups = groupRepository.findAll();
+        List<User> users = userRepository.findAll();
+
+        Random random = new Random();
+        NewPostRequest newPostRequest;
+
+        for(int i = 1; i<=50; ++i) {
+            newPostRequest = new NewPostRequest();
+            newPostRequest.title = "title" + i;
+            newPostRequest.content = "content" + i;
+            Group g = groups.get(random.nextInt(groups.size()));
+            newPostRequest.groupCode = g.getCode();
+            User user = users.get(random.nextInt(users.size()));
+            newPostRequest.username = user.getUsername();
+
+            postController.createNewPost(newPostRequest);
+        }
+    }
+
+    private void createFollows() {
+        List<User> users = userRepository.findAll();
+        Random random = new Random();
+
+        for(int i = 0; i<50; ++i){
+            User user1 = users.get(random.nextInt(users.size()));
+            User user2 = users.get(random.nextInt(users.size()));
+
+            if(!user1.getUsername().equals(user2.getUsername())){
+                FollowRequest followRequest = new FollowRequest();
+                followRequest.usernameFollowing = user1.getUsername();
+                followRequest.usernameFollowed = user2.getUsername();
+                userController.follow(followRequest);
+            }
+        }
     }
 
     private void addGroupsModerators() {
@@ -188,9 +267,9 @@ public class DbInit implements CommandLineRunner {
         Role adminRole = new Role("ADMIN");
 
         roleRepository.saveAll(roles);
-        log.info("Lookup each role by name...");
-        // roles = roleRepository.findAll();
-        roles.stream().forEach(r -> log.info("\t" + roleRepository.findByRole(r.getRole()).toString()));
+        log.info("Role [USER] added");
+        log.info("Role [ADMIN] added");
+
     }
 
     private void addGroups() {

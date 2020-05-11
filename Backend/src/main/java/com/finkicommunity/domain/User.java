@@ -7,13 +7,11 @@ import org.neo4j.ogm.annotation.Relationship;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 
 @NodeEntity
-public class User {
+public class User{
     @Id @GeneratedValue
     private Long id;
     private String username;
@@ -171,5 +169,18 @@ public class User {
             value += role + " ";
         }
         return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getUsername().equals(user.getUsername());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUsername());
     }
 }

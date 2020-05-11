@@ -1,5 +1,6 @@
 package com.finkicommunity.service;
 
+import com.finkicommunity.FinkiCommunityApplication;
 import com.finkicommunity.domain.Group;
 import com.finkicommunity.domain.Post;
 import com.finkicommunity.domain.User;
@@ -12,6 +13,8 @@ import com.finkicommunity.domain.response.post.PostDetailsResponse;
 import com.finkicommunity.domain.response.reply.ReplyResponse;
 import com.finkicommunity.exception.post.PostNotFoundException;
 import com.finkicommunity.repository.PostRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,6 +27,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class PostService {
+    private final static Logger log = LoggerFactory.getLogger(FinkiCommunityApplication.class);
 
     private PostRepository postRepository;
     private GroupService groupService;
@@ -86,12 +90,14 @@ public class PostService {
         // If post not found will be thrown exception
         Post post = getPostById(postId);
 
-        if(userThumbsUpPostRequest.isThumbUp){
+        if(!post.getThumbUps().contains(user)){
             // remove user if he thumb downs the post -> one user cannot thumb up and thumb down a post
             post.getThumbDowns().remove(user);
             post.getThumbUps().add(user);
+            log.info("User [" + user.getUsername() + "] thumbuped Post [" + post.getId() + "]");
         }else{
             post.getThumbUps().remove(user);
+            log.info("User [" + user.getUsername() + "] unthumbuped Post [" + post.getId() + "]");
         }
 
         postRepository.save(post);
@@ -108,12 +114,14 @@ public class PostService {
         // If post not found will be thrown exception
         Post post = getPostById(postId);
 
-        if(userThumbsDownPostRequest.isThumbDown){
+        if(!post.getThumbDowns().contains(user)){
             // remove user if he thumb ups the post -> one user cannot thumb up and thumb down a post at the same time
             post.getThumbUps().remove(user);
             post.getThumbDowns().add(user);
+            log.info("User [" + user.getUsername() + "] thumbdowned Post [" + post.getId() + "]");
         }else{
             post.getThumbDowns().remove(user);
+            log.info("User [" + user.getUsername() + "] unthumbdowned Post [" + post.getId() + "]");
         }
 
         postRepository.save(post);
@@ -136,7 +144,7 @@ public class PostService {
         newPost.setGroup(group);
 
         Post post = postRepository.save(newPost);
-
+        log.info("Post [" + post.getTitle() + "] added!");
         return convertFromPostToHomePostResponse(post);
     }
 

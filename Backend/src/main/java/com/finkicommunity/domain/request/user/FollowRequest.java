@@ -7,6 +7,6 @@ public class FollowRequest {
     public String usernameFollowing;
     @NotNull
     public String usernameFollowed;
-    @NotNull
-    public Boolean isFollow;
+//    @NotNull
+//    public Boolean isFollow;
 }

@@ -11,6 +11,7 @@ import com.finkicommunity.exception.user.UserNotFoundException;
 import com.finkicommunity.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -59,25 +60,29 @@ public class UserService {
         return u;
     }
 
-    public FollowRequest follow(FollowRequest followRequest) {
+    public ResponseEntity<String> follow(FollowRequest followRequest) {
+
         if(followRequest.usernameFollowing.equals(followRequest.usernameFollowed)){
             String message = "Both usernames [" + followRequest.usernameFollowing + ", " + followRequest.usernameFollowing + "] are the same. You cannot follow yourself.";
             throw new SameUsernameFollowingException(message);
         }
+
         String usernameFollowing = followRequest.usernameFollowing;
         User userFollowing = getUserByUsername(usernameFollowing); // Throws UserNotFoundException
 
         String usernameFollowed = followRequest.usernameFollowed;
         User userFollowed = getUserByUsername(usernameFollowed);
 
-        if(followRequest.isFollow){
-            userFollowing.getFollowing().add(userFollowed);
-        }else{
+        if(userFollowing.getFollowing().contains(userFollowed)){
             userFollowing.getFollowing().remove(userFollowed);
+            log.info("Follow request: " + userFollowing.getUsername() + " UNFOLLOWS " + userFollowed.getUsername());
+        }else{
+            userFollowing.getFollowing().add(userFollowed);
+            log.info("Follow request: " + userFollowing.getUsername() + " FOLLOWS " + userFollowed.getUsername());
         }
         userRepository.save(userFollowing);
 
-        return followRequest;
+        return ResponseEntity.ok().build();
     }
 
     public boolean doesUsernameExists(String username){

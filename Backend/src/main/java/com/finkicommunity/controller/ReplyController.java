@@ -1,5 +1,9 @@
 package com.finkicommunity.controller;
 
+import com.finkicommunity.domain.Reply;
+import com.finkicommunity.domain.request.post.UserThumbsDownPostRequest;
+import com.finkicommunity.domain.request.post.UserThumbsUpPostRequest;
+import com.finkicommunity.domain.request.reply.NewReplyRequest;
 import com.finkicommunity.domain.request.reply.UserLikesReplyRequest;
 import com.finkicommunity.domain.response.reply.ReplyResponse;
 import com.finkicommunity.service.ReplyService;
@@ -27,8 +31,19 @@ public class ReplyController {
         }
     }
 
-    @PostMapping("/like")
-    public ResponseEntity<UserLikesReplyRequest> likeReply(@RequestBody @Valid UserLikesReplyRequest userLikesReplyRequest){
-        return ResponseEntity.ok(replyService.likeReply(userLikesReplyRequest));
+    @PostMapping("/new")
+    public ResponseEntity<Reply> createNewReply(@RequestBody @Valid NewReplyRequest newReplyRequest){
+        return ResponseEntity.ok(replyService.createNewReply(newReplyRequest));
     }
+
+    @PostMapping("/thumbup")
+    public ResponseEntity<String> thumbUpReply(@RequestBody @Valid UserThumbsUpPostRequest userThumbsUpReplyRequest){
+        return ResponseEntity.ok(replyService.thumbUpReply(userThumbsUpReplyRequest));
+    }
+
+    @PostMapping("/thumbdown")
+    public ResponseEntity<String> thumbDownReply(@RequestBody @Valid UserThumbsDownPostRequest userThumbsDownReplyRequest){
+        return ResponseEntity.ok(replyService.thumbDownReply(userThumbsDownReplyRequest));
+    }
+
 }

@@ -18,15 +18,19 @@ public class Reply {
     @Relationship(type = "USER_REPLY", direction = Relationship.UNDIRECTED)
     private User user;
 
-    @Relationship(type = "LIKES", direction = Relationship.UNDIRECTED)
-    private Set<User> likes;
+    @Relationship(type = "THUMB_UP", direction = Relationship.UNDIRECTED)
+    private Set<User> thumbUps;
+
+    @Relationship(type = "THUMB_DOWN", direction = Relationship.UNDIRECTED)
+    private Set<User> thumbDowns;
 
     @Relationship(type = "POST_REPLY", direction = Relationship.UNDIRECTED)
     private Post post;
 
     public Reply() {
         created = System.currentTimeMillis();
-        likes = new HashSet<>();
+        thumbUps = new HashSet<>();
+        thumbDowns = new HashSet<>();
     }
 
     public Long getId() {
@@ -57,8 +61,20 @@ public class Reply {
         this.user = user;
     }
 
-    public Set<User> getLikes() {
-        return likes;
+    public Set<User> getThumbUps() {
+        return thumbUps;
+    }
+
+    public void setThumbUps(Set<User> thumbUps) {
+        this.thumbUps = thumbUps;
+    }
+
+    public Set<User> getThumbDowns() {
+        return thumbDowns;
+    }
+
+    public void setThumbDowns(Set<User> thumbDowns) {
+        this.thumbDowns = thumbDowns;
     }
 
     public Post getPost() {
@@ -71,6 +87,6 @@ public class Reply {
 
     @Override
     public String toString() {
-        return id + " " + content + " " + user.getUsername() + " " + post.getTitle() + " " + likes.size();
+        return id + " " + content + " " + user.getUsername() + " " + post.getTitle();
     }
 }

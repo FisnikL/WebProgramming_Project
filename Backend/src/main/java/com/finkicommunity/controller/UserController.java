@@ -46,7 +46,7 @@ public class UserController {
 
 
     @PostMapping("/follow")
-    public ResponseEntity<FollowRequest> follow(@RequestBody @Valid FollowRequest followRequest){
-        return ResponseEntity.ok(userService.follow(followRequest));
+    public ResponseEntity<String> follow(@RequestBody @Valid FollowRequest followRequest){
+        return userService.follow(followRequest);
     }
 }

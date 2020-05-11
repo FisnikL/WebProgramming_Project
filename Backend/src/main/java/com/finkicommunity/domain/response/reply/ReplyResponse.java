@@ -6,7 +6,9 @@ public class ReplyResponse {
     public long created;
 
     public String username;
-    public int numOfLikes;
+
+    public int numOfThumbUps;
+    public int numOfThumbDowns;
 
     public long postId;
 }

@@ -7,6 +7,6 @@ public class UserThumbsUpPostRequest {
     public String username;
     @NotNull
     public Long postId;
-    @NotNull
-    public Boolean isThumbUp;  // If true -> thumbUp, if false -> exiting thumb up
+//    @NotNull
+//    public Boolean isThumbUp;  // If true -> thumbUp, if false -> exiting thumb up
 }
