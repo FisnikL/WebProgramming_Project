@@ -1,8 +1,10 @@
 package com.finkicommunity.service;
 
+import com.finkicommunity.FinkiCommunityApplication;
 import com.finkicommunity.domain.Group;
 import com.finkicommunity.domain.ImageModel;
 import com.finkicommunity.domain.User;
+import com.finkicommunity.domain.request.group.AddGroupModeratorRequest;
 import com.finkicommunity.domain.request.group.NewGroupRequest;
 import com.finkicommunity.domain.response.group.GroupDetailsResponse;
 import com.finkicommunity.domain.response.group.GroupModeratorResponse;
@@ -10,6 +12,9 @@ import com.finkicommunity.exception.group.GroupCodeAlreadyExistsException;
 import com.finkicommunity.exception.group.GroupDoesntExistException;
 import com.finkicommunity.exception.group.GroupNameAlreadyExistsException;
 import com.finkicommunity.repository.GroupRepository;
+import com.finkicommunity.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,9 +32,13 @@ import java.util.zip.Inflater;
 @Service
 public class GroupService {
     private GroupRepository groupRepository;
+    private UserRepository userRepository;
 
-    public GroupService(GroupRepository groupRepository) {
+    private final static Logger log = LoggerFactory.getLogger(FinkiCommunityApplication.class);
+
+    public GroupService(GroupRepository groupRepository, UserRepository userRepository) {
         this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Group> getAllGroups(){
@@ -65,7 +74,9 @@ public class GroupService {
         group.setName(newGroupRequest.name);
         group.setDescription(newGroupRequest.description);
 
-        return groupRepository.save(group);
+        Group g = groupRepository.save(group);
+        log.info("Group " + g.getName() + " saved!");
+        return g;
     }
 
     public List<Group> searchGroups(String searchTerm) {
@@ -178,4 +189,22 @@ public class GroupService {
     }
 
 
+    public ResponseEntity<String> addGroupModerator(AddGroupModeratorRequest addGroupModeratorRequest) {
+        Optional<Group> groupOptional = groupRepository.findByCode(addGroupModeratorRequest.groupCode);
+        if(!groupOptional.isPresent()){
+            return ResponseEntity.notFound().build();
+        }
+
+        User user = userRepository.findByUsername(addGroupModeratorRequest.username);
+        if(user == null){
+            return ResponseEntity.notFound().build();
+        }
+
+        Group group = groupOptional.get();
+
+        group.addModerator(user);
+
+        log.info("User [" +user.getUsername() + "] added as moderator on group [" + group.getName() + "]");
+        return ResponseEntity.ok().build();
+    }
 }

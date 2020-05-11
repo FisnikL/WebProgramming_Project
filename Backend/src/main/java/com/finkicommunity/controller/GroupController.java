@@ -2,6 +2,7 @@ package com.finkicommunity.controller;
 
 import com.finkicommunity.domain.Group;
 import com.finkicommunity.domain.ImageModel;
+import com.finkicommunity.domain.request.group.AddGroupModeratorRequest;
 import com.finkicommunity.domain.request.group.NewGroupRequest;
 import com.finkicommunity.domain.request.group.UploadGroupImage;
 import com.finkicommunity.domain.response.group.GroupDetailsResponse;
@@ -63,5 +64,10 @@ public class GroupController {
     @GetMapping("/details/{groupCode}/groupImage")
     public ResponseEntity<ImageModel> getGroupImage(@PathVariable String groupCode) {
         return groupService.getGroupImage(groupCode);
+    }
+
+    @PostMapping("/details/addGroupModerator")
+    public ResponseEntity<String> addGroupModerator(@RequestBody @Valid AddGroupModeratorRequest addGroupModeratorRequest) {
+        return groupService.addGroupModerator(addGroupModeratorRequest);
     }
 }

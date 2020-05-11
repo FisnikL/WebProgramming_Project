@@ -35,12 +35,12 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid RegisterUserRequest registerUserRequest){
-        System.out.println(registerUserRequest);
+//        System.out.println(registerUserRequest);
         if(userService.saveNewUser(registerUserRequest) != null){
-            System.out.println("SUCCESS!");
+            // System.out.println("SUCCESS!");
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
-        System.out.println("BAD_REQUEST");
+        // System.out.println("BAD_REQUEST");
         return ResponseEntity.badRequest().build();
     }
 

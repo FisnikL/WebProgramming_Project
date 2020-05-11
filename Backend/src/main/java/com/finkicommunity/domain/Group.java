@@ -16,7 +16,6 @@ public class Group {
     private String name;
     private String description;
 
-    @Relationship(type="GROUP_PICTURE")
     private ImageModel groupPicture;
 
     @Relationship(type = "MODERATOR", direction = Relationship.UNDIRECTED)
