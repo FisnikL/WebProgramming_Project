@@ -266,6 +266,9 @@ public class DbInit implements CommandLineRunner {
         // Role moderatorRole = new Role("MODERATOR");
         Role adminRole = new Role("ADMIN");
 
+        roles.add(userRole);
+        roles.add(adminRole);
+
         roleRepository.saveAll(roles);
         log.info("Role [USER] added");
         log.info("Role [ADMIN] added");

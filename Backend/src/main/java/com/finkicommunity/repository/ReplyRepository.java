@@ -1,8 +1,6 @@
 package com.finkicommunity.repository;
 
 import com.finkicommunity.domain.Reply;
-import org.springframework.data.neo4j.annotation.Depth;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;

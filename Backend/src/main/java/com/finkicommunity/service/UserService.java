@@ -8,6 +8,7 @@ import com.finkicommunity.domain.request.user.RegisterUserRequest;
 import com.finkicommunity.domain.response.user.UserResponse;
 import com.finkicommunity.exception.user.SameUsernameFollowingException;
 import com.finkicommunity.exception.user.UserNotFoundException;
+import com.finkicommunity.repository.RoleRepository;
 import com.finkicommunity.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,11 +24,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private UserRepository userRepository;
+    private RoleRepository roleRepository;
 
     private final static Logger log = LoggerFactory.getLogger(FinkiCommunityApplication.class);
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public List<UserResponse> getAllUsers(){
@@ -53,7 +56,8 @@ public class UserService {
         user.setEmail(registerUserRequest.email);
         user.setPassword(passwordEncoder.encode(registerUserRequest.password));
         user.setGender(registerUserRequest.gender);
-
+//        System.out.println(roleRepository.findByRole("USER"));
+        user.getRoles().add(roleRepository.findByRole("USER"));
         User u = userRepository.save(user);
         log.info("User " + u.getUsername() + " saved!");
 
