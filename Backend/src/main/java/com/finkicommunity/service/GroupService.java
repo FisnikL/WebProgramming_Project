@@ -204,6 +204,8 @@ public class GroupService {
 
         group.addModerator(user);
 
+        groupRepository.save(group);
+
         log.info("User [" +user.getUsername() + "] added as moderator on group [" + group.getName() + "]");
         return ResponseEntity.ok().build();
     }

@@ -1,0 +1,15 @@
+<table *ngIf="userDetailsFollowers.length > 0" class="table-hover">
+    <thead>
+    <th>Name</th>
+    <th>Surname</th>
+    <th>Username</th>
+    </thead>
+    <tbody>
+    <tr *ngFor="let follower of userDetailsFollowers">
+        <td class="name">{{follower.firstName}}</td>
+        <td class="surname">{{follower.lastName}}</td>
+        <td class="username"><a routerLink="/details/{{follower.username}}">{{follower.username}}</a></td>
+    </tr>
+    </tbody>
+</table>
+

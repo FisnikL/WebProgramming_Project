@@ -1,0 +1,14 @@
+<table class="table-hover">
+    <tbody>
+    <tr *ngFor="let postLiked of userDetailsPostsLiked">
+        <td>
+            <div>
+                <span class="title">{{postLiked.title}}</span><span class="course-name"><a routerLink="/start/{{postLiked.courseName}}">{{postLiked.courseName}}</a></span>
+            </div>
+            <div>
+                {{postLiked.content}}
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>

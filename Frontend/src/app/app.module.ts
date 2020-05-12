@@ -41,6 +41,12 @@ import { SearchPostsComponent } from './components/home/home-posts/search-posts/
 import { GroupDetailsComponent } from './components/group-details/group-details.component';
 import { UploadGroupImageComponent } from './components/group-details/upload-group-image/upload-group-image.component';
 import { GroupPostComponent } from './components/group-details/group-post/group-post.component';
+import { AddGroupModeratorComponent } from './components/group-details/add-group-moderator/add-group-moderator.component';
+import {UserFollowingsComponent} from './components/user-details/user-followings/user-followings.component';
+import {UserDetailsComponent} from './components/user-details/user-info/user-details.component';
+import {UserPostsComponent} from './components/user-details/user-posts/user-posts.component';
+import {UserPostsLikedComponent} from './components/user-details/user-posts-liked/user-posts-liked.component';
+import {UserFollowersComponent} from './components/user-details/user-followers/user-followers.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +67,14 @@ import { GroupPostComponent } from './components/group-details/group-post/group-
     SearchPostsComponent,
     GroupDetailsComponent,
     UploadGroupImageComponent,
-    GroupPostComponent
+    GroupPostComponent,
+    AddGroupModeratorComponent,
+    UserDetailsComponent,
+    UserFollowingsComponent,
+    UserPostsComponent,
+    UserPostsLikedComponent,
+    UserFollowersComponent,
+
   ],
     imports: [
         BrowserModule,

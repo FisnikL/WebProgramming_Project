@@ -7,7 +7,6 @@ import com.finkicommunity.domain.User;
 import com.finkicommunity.domain.request.post.UserThumbsDownPostRequest;
 import com.finkicommunity.domain.request.post.UserThumbsUpPostRequest;
 import com.finkicommunity.domain.request.reply.NewReplyRequest;
-import com.finkicommunity.domain.request.reply.UserLikesReplyRequest;
 import com.finkicommunity.domain.response.reply.ReplyResponse;
 import com.finkicommunity.exception.reply.ReplyNotFoundException;
 import com.finkicommunity.repository.PostRepository;

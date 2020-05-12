@@ -1,0 +1,43 @@
+#follow-button{
+    text-align: center;
+    margin-top:20px;
+}
+
+#info{
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+#posts {
+    width: 35%;
+}
+
+#posts-liked {
+    width: 35%;
+}
+
+#followings {
+    width: 15%;
+}
+
+#followers {
+    width: 15%;
+}
+
+th{
+    text-align: center;
+}
+
+.title{
+    color:darkblue;
+    font-weight: bold;
+}
+
+.red{
+    color:red;
+}
+
+.green{
+    color:green;
+}
