@@ -1,0 +1,85 @@
+<div *ngIf="thread">
+    <!--TOP PART START-->
+    <div class="container-fluid">
+        <div class="row">
+            <span *ngIf="thread.imageUrl" class="col-auto d-flex"><img
+                src="assets/{{thread.imageUrl}}"
+                alt="Users image"
+                width="50px"
+                height="60px">
+            </span>
+            <span *ngIf="thread.username" class="col d-flex p-0">
+                <a [routerLink]="['/details/', thread.username]"
+                   [class.admin-color]="thread.role===admin"
+                   [class.moderator-color]="thread.role===moderator"
+                   [class.user-color]="thread.role===user"
+                ><b>{{thread.username}}</b></a>
+            </span>
+        </div>
+    </div>
+    <!--TOP PART END-->
+
+    <hr>
+
+    <!--MIDDLE PART START-->
+    <div class="row">
+        <h3 *ngIf="thread.title" class="col">{{thread.title}}</h3>
+        <div *ngIf="!thread.repliedTo" class="col-auto font-weight-light"><a
+            routerLink="/start/{{thread.courseName}}">Course: {{thread.courseName}}</a>
+
+        </div>
+        <div class="col-auto font-weight-light mr-1 ml-auto">{{thread.timeOfPost | date:"dd.MM.y"}}</div>
+    </div>
+    <div *ngIf="thread && thread.content">
+        <p>{{thread.content}}</p>
+    </div>
+    <!--MIDDLE PART END-->
+
+    <hr>
+
+    <!--BOTTOM PART START-->
+    <div class="row">
+        <div *ngIf="isLoggedIn && !thread.repliedTo" class="col-sm-5 ml-1 mb-1 mr-auto">
+            {{thread.numberOfComments}}
+            <i class="material-icons btn p-0">
+                mode_comment
+            </i>
+            <button class="btn btn-outline-dark"
+                    (click)="openDialog(thread.threadId)">
+                Leave a comment
+            </button>
+        </div>
+
+        <div *ngIf="isLoggedIn" class="col-sm-5 mr-1 ml-auto text-right">
+            <!--LIKE BUTTON-->
+            <button class="float-right font-weight-light mr-1 btn"
+                    [class.like]="thread.isLiked"
+                    [class.btn-outline-dark]="!thread.isLiked" (click)="likes(thread)">
+
+                <i *ngIf="!thread.isLiked" class="material-icons btn p-0 pr-2">
+                    thumb_up
+                </i>
+                {{thread.isLiked ? 'LIKED' : 'LIKE'}}
+            </button>
+            <span class="mr-2 center">
+                ▲{{thread.numberOfLikes}}
+            </span>
+        </div>
+    </div>
+
+
+    <button *ngIf="!isOpen && thread.numberOfComments>0" type="button" class="btn btn-light col mt-2"
+            (click)="loadComments()">
+        · · · LoadComments · · ·
+    </button>
+    <section class="mt-3 pt-2">
+        <div *ngIf="isOpen && replies && replies.length>0">
+            <ul class="list-group list-unstyled">
+                <li *ngFor="let reply of replies">
+                    <app-thread [thread]="reply" class="list-group-item "></app-thread>
+                </li>
+            </ul>
+        </div>
+    </section>
+    <!--BOTTOM PART END-->
+</div>

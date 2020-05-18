@@ -1,0 +1,40 @@
+<div class="mt-2 shadow pl-4 p-2">
+    <div>
+        <h3>{{selectedCourse.length != 0 ? selectedCourse : 'Threads'}}</h3>
+    </div>
+    <hr>
+    <div class="row justify-content-around m-2">
+        <section class="section col-sm-6 mr-auto ml-0 p-0">
+            <label class="margin">Threads per page:</label>
+            <mat-radio-group [(ngModel)]="numberOfPostsByPage"
+                             (change)="onValueChange()"
+                             class="mt-2" color="primary">
+                <mat-radio-button class="margin" value="10">10</mat-radio-button>
+                <mat-radio-button class="margin" value="25">25</mat-radio-button>
+                <mat-radio-button class="margin" value="50">50</mat-radio-button>
+            </mat-radio-group>
+        </section>
+        <button *ngIf="isLoggedIn" mat-raised-button (click)="openDialog()" class="col-sm-2 ml-auto mr-0 p-0 ">New
+            Thread
+        </button>
+    </div>
+    <hr>
+    <div *ngIf="!threads">
+        <mat-spinner class="d-flex m-auto mt-xl-5"></mat-spinner>
+    </div>
+    <div *ngIf="threads">
+        <ul class="list-group list-unstyled">
+            <li *ngIf="threads.length == 0" class="list-group-item-info ">
+                No threads for this course yet.
+            </li>
+            <li *ngFor="let thread of threads | paginate: {itemsPerPage: numberOfPostsByPage, currentPage: p}">
+                <app-thread [thread]="thread" class="list-group-item shadow-sm mb-1"></app-thread>
+            </li>
+        </ul>
+    </div>
+    <div class="text-center">
+        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    </div>
+
+</div>
+

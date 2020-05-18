@@ -1,0 +1,14 @@
+export const API_URL = 'http://localhost:8080/';
+export const COURSE_LIST = 'forum/courses/filter';
+export const THREAD_LIST = 'forum/posts/top?noOfPosts=';
+export const THREAD_LIST_10 = 'forum/posts/top/10';
+export const THREAD_REPLIES = 'forum/posts/clicked';
+export const POST_COURSE = 'forum/courses/new';
+export const USERS = 'forum/users/';
+export const POST_THREAD = 'forum/posts/new';
+export const REGISTER_USER = 'register';
+export const LOGIN_USER = 'login';
+export const USER_LIKES_POST = 'likes';
+export const SEARCH_URL = 'http://localhost:8080/forum/users/search?q=';
+export const CHANGE_ROLE_URL = 'http://localhost:8080/forum/users/role';
+export const COURSE_NAMES = 'forum/courses/coursenames';
