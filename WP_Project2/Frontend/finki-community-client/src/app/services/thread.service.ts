@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable, of, Subject} from 'rxjs';
 import {Thread} from '../Models/Classes/Thread';
-import {MockClassesCreationService} from './mock-classes-creation.service';
 import {IThread} from '../Models/Interfaces/IThread';
 import {catchError, map} from 'rxjs/operators';
 import {API_URL, THREAD_LIST, THREAD_REPLIES, USER_LIKES_POST, USERS, POST_THREAD} from '../Models/global-const-url-paths';
@@ -27,7 +26,7 @@ export class ThreadService {
 
     constructor(private http: HttpClient,
                 private courseService: CourseService,
-                private mock: MockClassesCreationService,
+                // private mock: MockClassesCreationService,
                 private _snackBar: MatSnackBar,
                 private route: Router,
                 private url: UrlService
@@ -124,11 +123,11 @@ export class ThreadService {
 
     postThread(postPostForm: FormGroup) {
         let content = postPostForm.get('content').value;
-        let title = postPostForm.get('title').value;
+        let title = (postPostForm.get('title') ? postPostForm.get('title').value : '');
         let username = postPostForm.get('username').value;
         let courseName = postPostForm.get('courseName') ? postPostForm.get('courseName').value : null;
         let threadIdString = postPostForm.get('replyToPostId') ? parseInt(postPostForm.get('replyToPostId').value) : null;
-
+        // console.log("TITLE: " + title);
         let post;
         if (threadIdString !== null) {
             post = new PostReply(content, title, username, threadIdString);

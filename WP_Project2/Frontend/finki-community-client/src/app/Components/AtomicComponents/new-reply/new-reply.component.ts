@@ -15,7 +15,7 @@ export class NewReplyComponent implements OnInit {
     postPostForm = new FormGroup({
         content: new FormControl('', [Validators.required, Validators.maxLength(300)]),
         username: new FormControl('', Validators.required),
-        title: new FormControl('', Validators.required),
+        // title: new FormControl('', Validators.required),
         replyToPostId: new FormControl('')
     });
 
@@ -31,12 +31,9 @@ export class NewReplyComponent implements OnInit {
     ngOnInit() {
         this.postPostForm.get('username').setValue(localStorage.getItem('username'));
         this.postPostForm.get('replyToPostId').setValue(this.data.postId);
-
     }
 
     onSubmit() {
-
-
         this.threadService.postThread(this.postPostForm);
         this.route.navigate(['/start']).then(r => {
         });

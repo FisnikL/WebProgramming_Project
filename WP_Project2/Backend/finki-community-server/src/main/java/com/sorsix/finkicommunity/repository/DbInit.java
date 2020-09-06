@@ -6,13 +6,15 @@ import com.sorsix.finkicommunity.controller.UserController;
 import com.sorsix.finkicommunity.domain.entities.Course;
 import com.sorsix.finkicommunity.domain.entities.Post;
 import com.sorsix.finkicommunity.domain.entities.User;
-import com.sorsix.finkicommunity.domain.enums.*;
+import com.sorsix.finkicommunity.domain.enums.CourseType;
+import com.sorsix.finkicommunity.domain.enums.Program;
+import com.sorsix.finkicommunity.domain.enums.Semester;
+import com.sorsix.finkicommunity.domain.enums.StudyYear;
 import com.sorsix.finkicommunity.domain.requests.*;
-import com.sorsix.finkicommunity.domain.responses.user.FollowResponse;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.Arrays;
+
 import java.util.List;
 import java.util.Random;
 
@@ -602,7 +604,7 @@ public class DbInit implements CommandLineRunner {
         programs = Program.KNI.toString() + "," + Program.IKI.toString() + "," + Program.MT.toString();
         newCourseRequest = new NewCourseRequest();
         newCourseRequest.code = "dm1";
-        newCourseRequest.courseName = "DiskretnaMatematika 1";
+        newCourseRequest.courseName = "DiskretnaMatematika1";
         newCourseRequest.courseDescription = "courseDescription3";
         newCourseRequest.programs = programs;
         newCourseRequest.studyYear = StudyYear.FRESHMAN;

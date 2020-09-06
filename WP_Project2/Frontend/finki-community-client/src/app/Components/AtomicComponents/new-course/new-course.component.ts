@@ -28,7 +28,8 @@ export class NewCourseComponent implements OnInit {
 
 
     constructor(
-        public dialogRef: MatDialogRef<AdminComponent>, private courseService: CourseService) {
+        public dialogRef: MatDialogRef<AdminComponent>,
+        private courseService: CourseService) {
     }
 
     onNoClick(): void {
@@ -41,7 +42,6 @@ export class NewCourseComponent implements OnInit {
 
 
     onSubmit() {
-
         let message = this.courseService.postCourse(this.postCourseForm);
         this.dialogRef.close();
     }
@@ -62,5 +62,4 @@ export class NewCourseComponent implements OnInit {
 
         return errors.join(', ');
     }
-
 }

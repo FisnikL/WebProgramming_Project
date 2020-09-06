@@ -57,7 +57,6 @@ export class NewPostComponent implements OnInit {
                 this.courses = courses;
             }
         );
-
         this.filteredCourses =
             (<FormControl> this.postPostForm.get('courseName'))
                 .valueChanges
